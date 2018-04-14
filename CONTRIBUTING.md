@@ -1,3 +1,3 @@
-# How to contribute
+# Your contributions will be ignored
 
-The files in this repository are used as the starting point for all students. Because we want students to write the majority of the code themselves, pull requests (most likely) will _not_ be merged into the project.
+This repository is Chris Valmonte's project submission for [Udacity's Front-End Web Development Nanodegree](https://www.udacity.com/course/front-end-web-developer-nanodegree--nd001) Memory Game Project. Therefore, I will not accept pull requests.
