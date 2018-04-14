@@ -155,4 +155,4 @@ restart.addEventListener('click', function() {
 
 
 
-displayCards();
+document.addEventListener('DOMContentLoaded', displayCards);
