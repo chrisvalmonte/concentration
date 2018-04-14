@@ -5,12 +5,11 @@
 var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
-
-var deck = document.querySelector('.deck');
-var restart = document.querySelector('.restart');
 var moves = document.querySelector('.moves');
 var stars = document.querySelector('.stars');
 var START_MOVES = 0;
+
+
 
 /*
  * Display the cards on the page
@@ -18,8 +17,6 @@ var START_MOVES = 0;
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
-displayCards();
 
 function displayCards() {
 	var cardsFragment = document.createDocumentFragment();
@@ -40,6 +37,8 @@ function displayCards() {
 
 	deck.appendChild(cardsFragment);
 }
+
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -76,6 +75,8 @@ function showMatch(cardsToShow) {
 	});
 }
 
+
+
 function showMismatch(cardsToShow) {
 	setTimeout(function() {
 		cardsToShow.forEach(function(card) {
@@ -85,6 +86,8 @@ function showMismatch(cardsToShow) {
 	}, 1000);
 }
 
+
+
 function addMove() {
 	numMoves = parseInt(moves.textContent, 10);
 	numMoves++;
@@ -92,6 +95,8 @@ function addMove() {
 
 	updateStars(numMoves);
 }
+
+
 
 function updateStars(moveCount) {
 	var starIcons = stars.querySelectorAll('.fa');
@@ -109,6 +114,9 @@ function updateStars(moveCount) {
 	}
 }
 
+
+
+var deck = document.querySelector('.deck');
 deck.addEventListener('click', function(event) {
 	if(event.target.nodeName !== 'LI')
 		return;
@@ -132,6 +140,8 @@ deck.addEventListener('click', function(event) {
 	}
 });
 
+
+var restart = document.querySelector('.restart');
 restart.addEventListener('click', function() {
 	while(deck.firstChild) {
 		deck.removeChild(deck.firstChild);
@@ -142,3 +152,7 @@ restart.addEventListener('click', function() {
 	updateStars(START_MOVES);
 	displayCards();
 });
+
+
+
+displayCards();
