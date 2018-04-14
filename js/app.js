@@ -6,6 +6,8 @@ var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
 
+var deck = document.querySelector('.deck');
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -32,7 +34,6 @@ function displayCards() {
 		cardsFragment.appendChild(cardElem);
 	});
 
-	var deck = document.querySelector('.deck');
 	deck.appendChild(cardsFragment);
 }
 
@@ -62,3 +63,41 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+function showMatch(cardsToShow) {
+	cardsToShow.forEach(function(card) {
+		card.classList.remove('open');
+		card.classList.remove('show');
+		card.classList.add('match');
+	});
+}
+
+function showMismatch(cardsToShow) {
+	setTimeout(function() {
+		cardsToShow.forEach(function(card) {
+			card.classList.remove('open');
+			card.classList.remove('show');
+		});
+	}, 1000);
+}
+
+deck.addEventListener('click', function(event) {
+	if(event.target.nodeName !== 'LI')
+		return;
+
+	var cardsOpen = deck.querySelectorAll('.card.open');
+	if(cardsOpen.length < 2) {
+		event.target.classList.add('open');
+		event.target.classList.add('show');
+
+		cardsOpen = deck.querySelectorAll('.card.open');
+		if(cardsOpen.length === 2) {
+			var firstCard = cardsOpen[0].querySelector('.fa').classList[1];
+			var secondCard = cardsOpen[1].querySelector('.fa').classList[1];
+
+			firstCard === secondCard
+				? showMatch(cardsOpen)
+				: showMismatch(cardsOpen);
+		}
+	}
+});
