@@ -9,6 +9,8 @@ var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 var deck = document.querySelector('.deck');
 var restart = document.querySelector('.restart');
 var moves = document.querySelector('.moves');
+var stars = document.querySelector('.stars');
+var START_MOVES = 0;
 
 /*
  * Display the cards on the page
@@ -86,8 +88,25 @@ function showMismatch(cardsToShow) {
 function addMove() {
 	numMoves = parseInt(moves.textContent, 10);
 	numMoves++;
-
 	moves.textContent = numMoves;
+
+	updateStars(numMoves);
+}
+
+function updateStars(moveCount) {
+	var starIcons = stars.querySelectorAll('.fa');
+	if(moveCount <= 10) {
+		starIcons.forEach(function(star) {
+			star.classList.remove('fa-star-o');
+			star.classList.add('fa-star');
+		});
+	} else if (moveCount <= 15) {
+		starIcons[2].classList.remove('fa-star');
+		starIcons[2].classList.add('fa-star-o');
+	} else {
+		starIcons[1].classList.remove('fa-star');
+		starIcons[1].classList.add('fa-star-o');
+	}
 }
 
 deck.addEventListener('click', function(event) {
@@ -118,7 +137,8 @@ restart.addEventListener('click', function() {
 		deck.removeChild(deck.firstChild);
 	}
 
-	moves.textContent = '0';
+	moves.textContent = START_MOVES;
 
+	updateStars(START_MOVES);
 	displayCards();
 });
