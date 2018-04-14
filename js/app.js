@@ -7,6 +7,8 @@ var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
 
 var deck = document.querySelector('.deck');
+var restart = document.querySelector('.restart');
+var moves = document.querySelector('.moves');
 
 /*
  * Display the cards on the page
@@ -81,6 +83,13 @@ function showMismatch(cardsToShow) {
 	}, 1000);
 }
 
+function addMove() {
+	numMoves = parseInt(moves.textContent, 10);
+	numMoves++;
+
+	moves.textContent = numMoves;
+}
+
 deck.addEventListener('click', function(event) {
 	if(event.target.nodeName !== 'LI')
 		return;
@@ -98,6 +107,18 @@ deck.addEventListener('click', function(event) {
 			firstCard === secondCard
 				? showMatch(cardsOpen)
 				: showMismatch(cardsOpen);
+
+			addMove();
 		}
 	}
+});
+
+restart.addEventListener('click', function() {
+	while(deck.firstChild) {
+		deck.removeChild(deck.firstChild);
+	}
+
+	moves.textContent = '0';
+
+	displayCards();
 });
