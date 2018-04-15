@@ -113,19 +113,83 @@ h1 {
 	margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.score-panel .restart {
+	float: right;
+	cursor: pointer;
+}
+
+/*
+ * Styles for the Win Overlay
+ */
+
+.win-overlay {
+	background-color: #fff;
+	bottom: 0;
+	display: none;
+	height: 100%;
+	left: 0;
+	position: fixed;
+	right: 0;
+	top: 0;
+	width: 100%;
+}
+
+.win-overlay > .inner {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+}
+
+.win-overlay > .inner > * {
+	text-align: center;
+}
+
+.win-overlay.open {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.win-overlay .restart{
+	background-color: #800080;
+	border: none;
+	border-radius: 5px;
+	color: #fff;
+	cursor: pointer;
+	font-size: 16px;
+	margin: 50px auto;
+	padding: 20px 0;
+	text-transform: uppercase;
+	width: 150px;
+}
+
+/*
+ * Styles for the stars
+ */
+
+.stars {
 	margin: 0;
 	padding: 0;
 	display: inline-block;
 	margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.stars li {
 	list-style: none;
 	display: inline-block;
 }
 
-.score-panel .restart {
-	float: right;
-	cursor: pointer;
+.win-overlay .fa-star {
+	animation-name: overlay-stars;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+	animation-timing-function: ease-in-out;
+	color: #ef7db0;
+	font-size: 35px;
+}
+
+@keyframes overlay-stars {
+	0% { transform: scale(1); }
+	50% { transform: scale(1.15); }
+	100% { transform: scale(1); }
 }
