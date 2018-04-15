@@ -2,12 +2,16 @@
  * Create a list that holds all of your cards
  */
 
+var START_MOVES = 0;
+var LEVEL_BEGINNER = 1;
+var LEVEL_INTERMEDIATE = 2;
+var LEVEL_EXPERT = 3;
 var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
 var moves = document.querySelector('.moves');
 var stars = document.querySelector('.stars');
-var START_MOVES = 0;
+var overlay = document.querySelector('.win-overlay');
 
 
 
@@ -116,6 +120,66 @@ function updateStars(moveCount) {
 
 
 
+function checkWin() {
+	var numMatches = document.querySelectorAll('.card.match').length;
+	if(numMatches !== cards.length)
+		return;
+
+	// won
+	populateWinOverlay();
+	overlay.classList.add('open');
+}
+
+
+
+function populateWinOverlay() {
+	overlay.querySelector('.moves').textContent = moves.textContent;
+
+	var overlayStars = stars.querySelectorAll('.fa-star');
+	var starsFragment = document.createDocumentFragment();
+
+	overlayStars.forEach(function() {
+		var iconElem = document.createElement('i');
+		iconElem.classList.add('fa');
+		iconElem.classList.add('fa-star');
+
+		var starElem = document.createElement('li');
+		starElem.appendChild(iconElem);
+
+		starsFragment.appendChild(starElem);
+	});
+
+	var level = overlay.querySelector('.level');
+	switch(overlayStars.length) {
+		case LEVEL_BEGINNER:
+			level.textContent = 'Beginner';
+			break;
+		case LEVEL_INTERMEDIATE:
+			level.textContent = 'Intermediate';
+			break;
+		case LEVEL_EXPERT:
+			level.textContent = 'Expert';
+			break;
+	}
+
+	overlay.querySelector('.stars').appendChild(starsFragment);
+}
+
+
+
+function resetGameBoard() {
+	while(deck.firstChild) {
+		deck.removeChild(deck.firstChild);
+	}
+
+	moves.textContent = START_MOVES;
+
+	updateStars(START_MOVES);
+	displayCards();
+}
+
+
+
 var deck = document.querySelector('.deck');
 deck.addEventListener('click', function(event) {
 	if(event.target.nodeName !== 'LI')
@@ -136,21 +200,23 @@ deck.addEventListener('click', function(event) {
 				: showMismatch(cardsOpen);
 
 			addMove();
+			checkWin();
 		}
 	}
 });
 
 
+
 var restart = document.querySelector('.restart');
-restart.addEventListener('click', function() {
-	while(deck.firstChild) {
-		deck.removeChild(deck.firstChild);
+restart.addEventListener('click', resetGameBoard);
+
+
+
+overlay.addEventListener('click', function(event) {
+	if(event.target.classList.contains('restart')) {
+		resetGameBoard();
+		overlay.classList.remove('open');
 	}
-
-	moves.textContent = START_MOVES;
-
-	updateStars(START_MOVES);
-	displayCards();
 });
 
 
