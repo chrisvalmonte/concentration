@@ -216,6 +216,8 @@ overlay.addEventListener('click', function(event) {
 	if(event.target.classList.contains('restart')) {
 		resetGameBoard();
 		overlay.classList.remove('open');
+		var overlayStars = overlay.querySelector('.stars');
+		overlayStars.innerHTML = '';
 	}
 });
 
