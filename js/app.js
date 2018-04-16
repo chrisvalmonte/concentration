@@ -1,7 +1,3 @@
-/*
- * Create a list that holds all of your cards
- */
-
 var CARDS = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
@@ -14,7 +10,6 @@ var CARDS = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
 function displayCards() {
 	var cardsFragment = document.createDocumentFragment();
 
@@ -54,16 +49,6 @@ function shuffle(array) {
 }
 
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
 
 function showMatch(cardsToShow) {
 	cardsToShow.forEach(function(card) {
@@ -81,7 +66,7 @@ function showMismatch(cardsToShow) {
 			card.classList.remove('open');
 			card.classList.remove('show');
 		});
-	}, 1000);
+	}, 1000); // Show mismatched cards for 1 second
 }
 
 
@@ -185,7 +170,13 @@ function checkWin() {
 }
 
 
-
+/*
+ * Populate the Win Overlay with:
+ *  - Number of moves
+ *  - Number of stars
+ *  - User's concentration level (based on number of stars)
+ *  - Total time elapsed
+ */
 function populateWinOverlay() {
 	var overlay = document.querySelector('.win-overlay');
 	overlay.querySelector('.moves').textContent =
@@ -235,7 +226,16 @@ function resetGameBoard() {
 }
 
 
-
+/*
+ * set up the event listener for a card. If a card is clicked:
+ *  - display the card's symbol
+ *  - add the card to a *list* of "open" cards
+ *  - if the list already has another card, check to see if the two cards match
+ *    + if the cards do match, lock the cards in the open position
+ *    + if the cards do not match, hide the cards again
+ *    + increment the move counter and display it on the page
+ *    + if all cards have matched, display a message with the final score
+ */
 document
 .querySelector('.deck')
 .addEventListener('click', function(event) {
@@ -247,7 +247,9 @@ document
 		event.target.classList.add('open');
 		event.target.classList.add('show');
 
+		// Update "open" cards
 		cardsOpen = document.querySelectorAll('.card.open');
+
 		if(cardsOpen.length === 2) {
 			var firstCard = cardsOpen[0].getAttribute('data-value');
 			var secondCard = cardsOpen[1].getAttribute('data-value');
