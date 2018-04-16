@@ -193,3 +193,10 @@ h1 {
 	50% { transform: scale(1.15); }
 	100% { transform: scale(1); }
 }
+
+/*
+ * Styles for the Game Timer
+ */
+.timer > .time {
+	margin-top: 0;
+}
