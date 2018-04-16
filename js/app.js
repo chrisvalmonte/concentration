@@ -183,7 +183,7 @@ function resetGameBoard() {
 
 var deck = document.querySelector('.deck');
 deck.addEventListener('click', function(event) {
-	if(event.target.nodeName !== 'LI')
+	if(event.target.nodeName !== 'LI' || event.target.classList.contains('match'))
 		return;
 
 	var cardsOpen = deck.querySelectorAll('.card.open');
