@@ -33,6 +33,7 @@ function displayCards() {
 		iconElem.classList.add(card);
 
 		var cardElem = document.createElement('li');
+		cardElem.setAttribute('data-value', card);
 		cardElem.classList.add('card');
 		cardElem.appendChild(iconElem);
 
@@ -192,8 +193,8 @@ deck.addEventListener('click', function(event) {
 
 		cardsOpen = deck.querySelectorAll('.card.open');
 		if(cardsOpen.length === 2) {
-			var firstCard = cardsOpen[0].querySelector('.fa').classList[1];
-			var secondCard = cardsOpen[1].querySelector('.fa').classList[1];
+			var firstCard = cardsOpen[0].getAttribute('data-value');
+			var secondCard = cardsOpen[1].getAttribute('data-value');
 
 			firstCard === secondCard
 				? showMatch(cardsOpen)
