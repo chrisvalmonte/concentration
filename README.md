@@ -9,7 +9,7 @@
 
 ## About
 
-This project demonstrates my HTML, CSS, and JavaScript fundamentals. It is a browser-based card matching game, also known as Concentration. Provided with a starter project consisting of some HTML and CSS styling, I will convert the static project into an interactive one and customize it as well.
+This project demonstrates my HTML, CSS, and JavaScript fundamentals. It is a browser-based card matching game, also known as Concentration. Provided with a starter project consisting of some HTML and CSS styling, I converted the static project into an interactive one and customized it as well.
 
 ## How The Game Works
 
@@ -25,7 +25,7 @@ Each turn:
 
 ## Game Functionality
 
-The goal of this project is to recreate the real-life game. There are a couple of interactions that I will handle:
+The goal of this project was to recreate the real-life game. There are a couple of interactions that I handled:
 
 * Flipping cards
 * What happens when cards match
