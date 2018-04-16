@@ -83,6 +83,7 @@ function addMove() {
 
 
 
+// Modified stopwatch functionality from https://jsfiddle.net/Daniel_Hug/pvk6p/
 var gameTimer = {};
 
 gameTimer.totalSeconds = 0;
