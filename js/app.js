@@ -169,12 +169,8 @@ function populateWinOverlay() {
 
 
 function resetGameBoard() {
-	while(deck.firstChild) {
-		deck.removeChild(deck.firstChild);
-	}
-
+	deck.innerHTML = '';
 	moves.textContent = START_MOVES;
-
 	updateStars(START_MOVES);
 	displayCards();
 }
