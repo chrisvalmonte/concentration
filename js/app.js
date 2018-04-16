@@ -2,16 +2,9 @@
  * Create a list that holds all of your cards
  */
 
-var START_MOVES = 0;
-var LEVEL_BEGINNER = 1;
-var LEVEL_INTERMEDIATE = 2;
-var LEVEL_EXPERT = 3;
-var cards = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
+var CARDS = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
-var moves = document.querySelector('.moves');
-var stars = document.querySelector('.stars');
-var overlay = document.querySelector('.win-overlay');
 
 
 
@@ -25,9 +18,9 @@ var overlay = document.querySelector('.win-overlay');
 function displayCards() {
 	var cardsFragment = document.createDocumentFragment();
 
-	shuffle(cards);
+	shuffle(CARDS);
 
-	cards.forEach(function(card) {
+	CARDS.forEach(function(card) {
 		var iconElem = document.createElement('i');
 		iconElem.classList.add('fa');
 		iconElem.classList.add(card);
@@ -40,7 +33,7 @@ function displayCards() {
 		cardsFragment.appendChild(cardElem);
 	});
 
-	deck.appendChild(cardsFragment);
+	document.querySelector('.deck').appendChild(cardsFragment);
 }
 
 
@@ -94,6 +87,7 @@ function showMismatch(cardsToShow) {
 
 
 function addMove() {
+	var moves = document.querySelector('.container .moves');
 	numMoves = parseInt(moves.textContent, 10);
 	numMoves++;
 	moves.textContent = numMoves;
@@ -104,7 +98,7 @@ function addMove() {
 
 
 function updateStars(moveCount) {
-	var starIcons = stars.querySelectorAll('.fa');
+	var starIcons = document.querySelectorAll('.stars .fa');
 	if(moveCount <= 10) {
 		starIcons.forEach(function(star) {
 			star.classList.remove('fa-star-o');
@@ -123,20 +117,22 @@ function updateStars(moveCount) {
 
 function checkWin() {
 	var numMatches = document.querySelectorAll('.card.match').length;
-	if(numMatches !== cards.length)
+	if(numMatches !== CARDS.length)
 		return;
 
 	// won
 	populateWinOverlay();
-	overlay.classList.add('open');
+	document.querySelector('.win-overlay').classList.add('open');
 }
 
 
 
 function populateWinOverlay() {
-	overlay.querySelector('.moves').textContent = moves.textContent;
+	var overlay = document.querySelector('.win-overlay');
+	overlay.querySelector('.moves').textContent =
+		document.querySelector('.score-panel .moves').textContent;
 
-	var overlayStars = stars.querySelectorAll('.fa-star');
+	var overlayStars = document.querySelectorAll('.score-panel .fa-star');
 	var starsFragment = document.createDocumentFragment();
 
 	overlayStars.forEach(function() {
@@ -150,44 +146,45 @@ function populateWinOverlay() {
 		starsFragment.appendChild(starElem);
 	});
 
+	overlay.querySelector('.stars').appendChild(starsFragment);
+
 	var level = overlay.querySelector('.level');
 	switch(overlayStars.length) {
-		case LEVEL_BEGINNER:
+		case 1: // 1 star
 			level.textContent = 'Beginner';
 			break;
-		case LEVEL_INTERMEDIATE:
+		case 2: // 2 stars
 			level.textContent = 'Intermediate';
 			break;
-		case LEVEL_EXPERT:
+		case 3: // 3 stars
 			level.textContent = 'Expert';
 			break;
 	}
-
-	overlay.querySelector('.stars').appendChild(starsFragment);
 }
 
 
 
 function resetGameBoard() {
-	deck.innerHTML = '';
-	moves.textContent = START_MOVES;
-	updateStars(START_MOVES);
+	document.querySelector('.deck').innerHTML = '';
+	document.querySelector('.score-panel .moves').textContent = 0;
+	updateStars(0);
 	displayCards();
 }
 
 
 
-var deck = document.querySelector('.deck');
-deck.addEventListener('click', function(event) {
-	if(event.target.nodeName !== 'LI' || event.target.classList.contains('match'))
+document
+.querySelector('.deck')
+.addEventListener('click', function(event) {
+	if(!event.target.classList.contains('card') || event.target.classList.contains('match'))
 		return;
 
-	var cardsOpen = deck.querySelectorAll('.card.open');
+	var cardsOpen = document.querySelectorAll('.card.open');
 	if(cardsOpen.length < 2) {
 		event.target.classList.add('open');
 		event.target.classList.add('show');
 
-		cardsOpen = deck.querySelectorAll('.card.open');
+		cardsOpen = document.querySelectorAll('.card.open');
 		if(cardsOpen.length === 2) {
 			var firstCard = cardsOpen[0].getAttribute('data-value');
 			var secondCard = cardsOpen[1].getAttribute('data-value');
@@ -204,17 +201,20 @@ deck.addEventListener('click', function(event) {
 
 
 
-var restart = document.querySelector('.restart');
-restart.addEventListener('click', resetGameBoard);
+document
+.querySelector('.score-panel .restart')
+.addEventListener('click', resetGameBoard);
 
 
 
-overlay.addEventListener('click', function(event) {
+document
+.querySelector('.win-overlay')
+.addEventListener('click', function(event) {
 	if(event.target.classList.contains('restart')) {
 		resetGameBoard();
+		var overlay = document.querySelector('.win-overlay');
 		overlay.classList.remove('open');
-		var overlayStars = overlay.querySelector('.stars');
-		overlayStars.innerHTML = '';
+		overlay.querySelector('.stars').innerHTML = '';
 	}
 });
 
