@@ -88,11 +88,69 @@ function showMismatch(cardsToShow) {
 
 function addMove() {
 	var moves = document.querySelector('.container .moves');
-	numMoves = parseInt(moves.textContent, 10);
+	var numMoves = parseInt(moves.textContent, 10);
 	numMoves++;
+	if(numMoves === 1)
+		gameTimer.addOneSecond();
 	moves.textContent = numMoves;
-
 	updateStars(numMoves);
+}
+
+
+
+var gameTimer = {};
+
+gameTimer.totalSeconds = 0;
+gameTimer.seconds = 0;
+gameTimer.minutes = 0;
+gameTimer.timeout = null;
+
+gameTimer.addOneSecond = function() {
+	gameTimer.timeout = setTimeout(gameTimer.updateView, 1000);
+};
+
+gameTimer.stop = function() {
+	clearTimeout(gameTimer.timeout);
+};
+
+gameTimer.reset = function() {
+	document.querySelector('.timer > .time').innerHTML = '00:00';
+	gameTimer.totalSeconds = 0;
+	gameTimer.seconds = 0;
+	gameTimer.minutes = 0;
+	gameTimer.timeout = null;
+};
+
+gameTimer.updateView = function() {
+	++gameTimer.totalSeconds;
+	++gameTimer.seconds;
+	if (gameTimer.seconds >= 60) {
+		gameTimer.seconds = 0;
+		++gameTimer.minutes;
+	}
+
+	var seconds = gameTimer.seconds;
+	var minutes = gameTimer.minutes;
+
+	document.querySelector('.timer > .time').textContent =
+		(minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+	gameTimer.addOneSecond();
+};
+
+gameTimer.displayMessage = function() {
+	var totalSeconds = gameTimer.totalSeconds;
+	var timeElapsed = document.querySelector('.win-overlay .time-elapsed');
+
+	if (totalSeconds < 60)
+		timeElapsed.textContent = totalSeconds + ' seconds';
+	else {
+		var minutes = Math.floor(totalSeconds / 60);
+		var seconds = totalSeconds % 60;
+		minutes = minutes === 1 ? minutes + ' minute' : minutes + ' minutes';
+		seconds = seconds === 1 ? seconds + ' second' : seconds + ' seconds';
+		timeElapsed.textContent = minutes + ' and ' + seconds;
+	}
 }
 
 
@@ -121,6 +179,7 @@ function checkWin() {
 		return;
 
 	// won
+	gameTimer.stop();
 	populateWinOverlay();
 	document.querySelector('.win-overlay').classList.add('open');
 }
@@ -160,6 +219,8 @@ function populateWinOverlay() {
 			level.textContent = 'Expert';
 			break;
 	}
+
+	gameTimer.displayMessage();
 }
 
 
@@ -167,6 +228,8 @@ function populateWinOverlay() {
 function resetGameBoard() {
 	document.querySelector('.deck').innerHTML = '';
 	document.querySelector('.score-panel .moves').textContent = 0;
+	gameTimer.stop();
+	gameTimer.reset();
 	updateStars(0);
 	displayCards();
 }
