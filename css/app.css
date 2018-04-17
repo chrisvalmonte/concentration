@@ -20,18 +20,26 @@ body {
 
 body {
 	background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+	display: flex;
+	justify-content: center;
 	font-family: 'Coda', cursive;
 }
 
 .container {
 	display: flex;
-	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	width: 100%;
 }
 
 h1 {
 	font-family: 'Bungee Shade', cursive;
+}
+
+@media screen and (max-width: 659px) {
+	h1 {
+		font-size: 1.75em;
+	}
 }
 
 /*
@@ -103,6 +111,19 @@ h1 {
 	100% { transform: scale(1); }
 }
 
+@media screen and (max-width: 659px) {
+	.deck {
+		border-radius: 0;
+		margin-bottom: 0;
+		padding: 16px;
+		width: 100%;
+	}
+
+	.deck .card {
+		width: calc(25% - 10px);
+	}
+}
+
 /*
  * Styles for the Score Panel
  */
@@ -116,6 +137,12 @@ h1 {
 .score-panel .restart {
 	float: right;
 	cursor: pointer;
+}
+
+@media screen and (max-width: 659px) {
+	.score-panel {
+		width: 90%;
+	}
 }
 
 /*
