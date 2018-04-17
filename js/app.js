@@ -1,4 +1,4 @@
-var CARDS = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
+const CARDS = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
 'fa-anchor', 'fa-anchor', 'fa-bolt', 'fa-bolt', 'fa-cube', 'fa-cube', 'fa-leaf',
 'fa-leaf', 'fa-bicycle', 'fa-bicycle', 'fa-bomb', 'fa-bomb'];
 
@@ -11,16 +11,16 @@ var CARDS = ['fa-diamond', 'fa-diamond', 'fa-paper-plane-o', 'fa-paper-plane-o',
  *   - add each card's HTML to the page
  */
 function displayCards() {
-	var cardsFragment = document.createDocumentFragment();
+	const cardsFragment = document.createDocumentFragment();
 
 	shuffle(CARDS);
 
 	CARDS.forEach(function(card) {
-		var iconElem = document.createElement('i');
+		const iconElem = document.createElement('i');
 		iconElem.classList.add('fa');
 		iconElem.classList.add(card);
 
-		var cardElem = document.createElement('li');
+		const cardElem = document.createElement('li');
 		cardElem.setAttribute('data-value', card);
 		cardElem.classList.add('card');
 		cardElem.appendChild(iconElem);
@@ -35,7 +35,7 @@ function displayCards() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-	var currentIndex = array.length, temporaryValue, randomIndex;
+	let currentIndex = array.length, temporaryValue, randomIndex;
 
 	while (currentIndex !== 0) {
 		randomIndex = Math.floor(Math.random() * currentIndex);
@@ -72,8 +72,8 @@ function showMismatch(cardsToShow) {
 
 
 function addMove() {
-	var moves = document.querySelector('.container .moves');
-	var numMoves = parseInt(moves.textContent, 10);
+	const moves = document.querySelector('.container .moves');
+	let numMoves = parseInt(moves.textContent, 10);
 	numMoves++;
 	if(numMoves === 1)
 		gameTimer.addOneSecond();
@@ -84,7 +84,7 @@ function addMove() {
 
 
 // Modified stopwatch functionality from https://jsfiddle.net/Daniel_Hug/pvk6p/
-var gameTimer = {};
+const gameTimer = {};
 
 gameTimer.totalSeconds = 0;
 gameTimer.seconds = 0;
@@ -115,8 +115,8 @@ gameTimer.updateView = function() {
 		++gameTimer.minutes;
 	}
 
-	var seconds = gameTimer.seconds;
-	var minutes = gameTimer.minutes;
+	const seconds = gameTimer.seconds;
+	const minutes = gameTimer.minutes;
 
 	document.querySelector('.timer > .time').textContent =
 		(minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
@@ -125,14 +125,14 @@ gameTimer.updateView = function() {
 };
 
 gameTimer.displayMessage = function() {
-	var totalSeconds = gameTimer.totalSeconds;
-	var timeElapsed = document.querySelector('.win-overlay .time-elapsed');
+	const totalSeconds = gameTimer.totalSeconds;
+	const timeElapsed = document.querySelector('.win-overlay .time-elapsed');
 
 	if (totalSeconds < 60)
 		timeElapsed.textContent = totalSeconds + ' seconds';
 	else {
-		var minutes = Math.floor(totalSeconds / 60);
-		var seconds = totalSeconds % 60;
+		const minutes = Math.floor(totalSeconds / 60);
+		const seconds = totalSeconds % 60;
 		minutes = minutes === 1 ? minutes + ' minute' : minutes + ' minutes';
 		seconds = seconds === 1 ? seconds + ' second' : seconds + ' seconds';
 		timeElapsed.textContent = minutes + ' and ' + seconds;
@@ -142,7 +142,7 @@ gameTimer.displayMessage = function() {
 
 
 function updateStars(moveCount) {
-	var starIcons = document.querySelectorAll('.stars .fa');
+	const starIcons = document.querySelectorAll('.stars .fa');
 	if(moveCount <= 10) {
 		starIcons.forEach(function(star) {
 			star.classList.remove('fa-star-o');
@@ -160,7 +160,7 @@ function updateStars(moveCount) {
 
 
 function checkWin() {
-	var numMatches = document.querySelectorAll('.card.match').length;
+	const numMatches = document.querySelectorAll('.card.match').length;
 	if(numMatches !== CARDS.length)
 		return;
 
@@ -179,19 +179,19 @@ function checkWin() {
  *  - Total time elapsed
  */
 function populateWinOverlay() {
-	var overlay = document.querySelector('.win-overlay');
+	const overlay = document.querySelector('.win-overlay');
 	overlay.querySelector('.moves').textContent =
 		document.querySelector('.score-panel .moves').textContent;
 
-	var overlayStars = document.querySelectorAll('.score-panel .fa-star');
-	var starsFragment = document.createDocumentFragment();
+	const overlayStars = document.querySelectorAll('.score-panel .fa-star');
+	const starsFragment = document.createDocumentFragment();
 
 	overlayStars.forEach(function() {
-		var iconElem = document.createElement('i');
+		const iconElem = document.createElement('i');
 		iconElem.classList.add('fa');
 		iconElem.classList.add('fa-star');
 
-		var starElem = document.createElement('li');
+		const starElem = document.createElement('li');
 		starElem.appendChild(iconElem);
 
 		starsFragment.appendChild(starElem);
@@ -199,7 +199,7 @@ function populateWinOverlay() {
 
 	overlay.querySelector('.stars').appendChild(starsFragment);
 
-	var level = overlay.querySelector('.level');
+	const level = overlay.querySelector('.level');
 	switch(overlayStars.length) {
 		case 1: // 1 star
 			level.textContent = 'Beginner';
@@ -243,7 +243,7 @@ document
 	if(!event.target.classList.contains('card') || event.target.classList.contains('match'))
 		return;
 
-	var cardsOpen = document.querySelectorAll('.card.open');
+	let cardsOpen = document.querySelectorAll('.card.open');
 	if(cardsOpen.length < 2) {
 		event.target.classList.add('open');
 		event.target.classList.add('show');
@@ -252,8 +252,8 @@ document
 		cardsOpen = document.querySelectorAll('.card.open');
 
 		if(cardsOpen.length === 2) {
-			var firstCard = cardsOpen[0].getAttribute('data-value');
-			var secondCard = cardsOpen[1].getAttribute('data-value');
+			const firstCard = cardsOpen[0].getAttribute('data-value');
+			const secondCard = cardsOpen[1].getAttribute('data-value');
 
 			firstCard === secondCard
 				? showMatch(cardsOpen)
