@@ -19,7 +19,7 @@ body {
 }
 
 body {
-	background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+	background: #ffffff url('../img/geometry2.png') fixed; /* Background pattern from Subtle Patterns */
 	display: flex;
 	justify-content: center;
 	font-family: 'Coda', cursive;
