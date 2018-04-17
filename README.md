@@ -5,6 +5,7 @@
 * [About](#about)
 * [How The Game Works](#how-the-game-works)
 * [Game Functionality](#game-functionality)
+* [Dependencies](#dependencies)
 * [Contributing](#contributing)
 
 ## About
@@ -31,6 +32,11 @@ The goal of this project was to recreate the real-life game. There are a couple 
 * What happens when cards match
 * What happens when cards do not match
 * When the game finishes
+
+## Dependencies
+
+* `shuffle` function copied directly from http://stackoverflow.com/a/2450976
+* `gameTimer` function modified from https://jsfiddle.net/Daniel_Hug/pvk6p/
 
 ## Contributing
 
