@@ -163,13 +163,13 @@ gameTimer.displayMessage = function() {
 	if (totalSeconds < 60)
 		timeElapsed.textContent = totalSeconds + ' seconds';
 	else {
-		const minutes = Math.floor(totalSeconds / 60);
-		const seconds = totalSeconds % 60;
+		let minutes = Math.floor(totalSeconds / 60);
+		let seconds = totalSeconds % 60;
 		minutes = minutes === 1 ? minutes + ' minute' : minutes + ' minutes';
 		seconds = seconds === 1 ? seconds + ' second' : seconds + ' seconds';
 		timeElapsed.textContent = minutes + ' and ' + seconds;
 	}
-}
+};
 
 
 
